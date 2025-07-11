@@ -1,8 +1,9 @@
+import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 
 function App() {
-  const [activities, setActivities] = useState([]);
+  const [activities, setActivities] = useState<Activity[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,16 +16,18 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <h3 className="app" style={{ color: 'red' }}>
+    <Fragment>
+      <Typography className="app" variant="h3">
         Reactivities
-      </h3>
-      <ul>
+      </Typography>
+      <List>
         {activities.map((activity) => (
-          <li key={activity.id}>{activity.title}</li>
+          <ListItem key={activity.id}>
+            <ListItemText>{activity.title}</ListItemText>
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Fragment>
   );
 }
 
