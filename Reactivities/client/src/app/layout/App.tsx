@@ -1,7 +1,8 @@
-import { Container, CssBaseline, List, ListItem, ListItemText } from '@mui/material';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { Container, CssBaseline } from '@mui/material';
 import NavBar from './NavBar';
+import ActivityDashboard from '../../features/activities/ActivityDashboard';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -24,13 +25,7 @@ function App() {
       <CssBaseline />
       <NavBar />
       <Container maxWidth="xl" sx={{ mt: 3 }}>
-        <List>
-          {activities.map((activity) => (
-            <ListItem key={activity.id}>
-              <ListItemText>{activity.title}</ListItemText>
-            </ListItem>
-          ))}
-        </List>
+        <ActivityDashboard activities={activities} />
       </Container>
     </>
   );
