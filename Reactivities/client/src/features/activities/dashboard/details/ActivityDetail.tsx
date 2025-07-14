@@ -5,10 +5,11 @@ type Props = {
   cancelSelectActivity: () => void;
   openForm: (id: string) => void;
 };
-const ActivityDetail = ({ activity, cancelSelectActivity, openForm }: Props) => {
+
+export default function ActivityDetail({ activity, cancelSelectActivity, openForm }: Props) {
   return (
     <Card sx={{ borderRadius: 3 }}>
-      <CardMedia component={'img'} src={`/images/categoryImages/${activity.category}.jpg`} />
+      <CardMedia component="img" src={`/images/categoryImages/${activity.category}.jpg`} />
       <CardContent>
         <Typography variant="h5">{activity.title}</Typography>
         <Typography variant="subtitle1" fontWeight="light">
@@ -26,6 +27,4 @@ const ActivityDetail = ({ activity, cancelSelectActivity, openForm }: Props) => 
       </CardActions>
     </Card>
   );
-};
-
-export default ActivityDetail;
+}
