@@ -2,20 +2,14 @@ import { Box, Container, CssBaseline, Typography } from '@mui/material';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 import { useState } from 'react';
-import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
+import useActivities from '../../lib/hooks/useActivities';
 
 function App() {
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
 
-  const { data: activities, isPending } = useQuery({
-    queryKey: ['activities'],
-    queryFn: async () => {
-      const response = await axios.get<Activity[]>('https://localhost:5001/api/activities');
-      return response.data;
-    },
-  });
+  const { activities, isPending } = useActivities();
+
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities!.find((x) => x.id === id));
   };
@@ -51,7 +45,7 @@ function App() {
   };
 
   return (
-    <Box sx={{ bgcolor: '#eeeeee' }}>
+    <Box sx={{ bgcolor: '#eeeeee', minHeight: '100vh' }}>
       <CssBaseline />
       <NavBar openForm={handleOpenForm} />
       <Container maxWidth="xl" sx={{ mt: 3 }}>
