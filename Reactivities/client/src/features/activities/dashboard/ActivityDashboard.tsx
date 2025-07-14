@@ -8,6 +8,9 @@ type Props = {
   selectActivity: (id: string) => void;
   selectedActivity?: Activity;
   cancelSelectActivity: () => void;
+  openForm: (id: string) => void;
+  closeForm: () => void;
+  editMode: boolean;
 };
 
 const ActivityDashboard = ({
@@ -15,6 +18,9 @@ const ActivityDashboard = ({
   selectedActivity,
   cancelSelectActivity,
   selectActivity,
+  openForm,
+  closeForm,
+  editMode,
 }: Props) => {
   return (
     <Grid2 container spacing={3}>
@@ -22,10 +28,14 @@ const ActivityDashboard = ({
         <ActivityList activities={activities} selectActivity={selectActivity} />
       </Grid2>
       <Grid2 size={5}>
-        {selectedActivity && (
-          <ActivityDetail cancelSelectActivity={cancelSelectActivity} activity={selectedActivity} />
+        {selectedActivity && !editMode && (
+          <ActivityDetail
+            openForm={openForm}
+            cancelSelectActivity={cancelSelectActivity}
+            activity={selectedActivity}
+          />
         )}
-        <ActivityForm />
+        {editMode && <ActivityForm closeForm={closeForm} activity={selectedActivity} />}
       </Grid2>
     </Grid2>
   );

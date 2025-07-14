@@ -1,20 +1,26 @@
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 
-const ActivityForm = () => {
+type Props = {
+  activity?: Activity;
+  closeForm: () => void;
+};
+const ActivityForm = ({ activity, closeForm }: Props) => {
   return (
     <Paper sx={{ borderRadius: 3, p: 3 }}>
       <Typography variant="h5" gutterBottom color="primary">
         Create Activity
       </Typography>
       <Box component="form" display="flex" flexDirection="column" gap={3}>
-        <TextField label="Title" />
+        <TextField label="Title" value={activity?.title} />
         <TextField label="Description" multiline={true} rows={3} />
         <TextField label="Category" />
         <TextField type="date" />
         <TextField label="City" />
         <TextField label="venue" />
         <Box display="flex" justifyContent="end" gap={3}>
-          <Button color="inherit">Cancel</Button>
+          <Button onClick={closeForm} color="inherit">
+            Cancel
+          </Button>
           <Button color="success" variant="contained">
             Submit
           </Button>
