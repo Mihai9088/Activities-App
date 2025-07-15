@@ -30,7 +30,16 @@ const useActivities = () => {
     },
   });
 
-  return { activities, isPending, updateActivity, createActivity };
+  const deleteActivity = useMutation({
+    mutationFn: async (id: string) => {
+      return await agent.delete(`/activities/${id}`);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['activities'] });
+    },
+  });
+
+  return { activities, isPending, updateActivity, createActivity, deleteActivity };
 };
 
 export default useActivities;
