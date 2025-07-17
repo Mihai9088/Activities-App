@@ -1,12 +1,16 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Link } from 'react-router';
+import useActivities from '../../../../lib/hooks/useActivities';
 
 export default function ActivityDetail() {
-  const activity = {} as Activity;
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { activity, isLoadingActivity } = useActivities(id);
 
-  if (!activity) return <Typography>Loading...</Typography>;
+  if (isLoadingActivity) return <Typography>Loading...</Typography>;
+
+  if (!activity) return <Typography>Activity not found</Typography>;
   return (
     <Card sx={{ borderRadius: 3 }}>
       <CardMedia component="img" src={`/images/categoryImages/${activity.category}.jpg`} />
