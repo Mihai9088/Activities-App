@@ -22,7 +22,7 @@ const NavBar = () => {
             </Box>
             <Box sx={{ display: 'flex' }}>
               <MenuItemLink to="/activities">Activities</MenuItemLink>
-
+              <MenuItemLink to="/counter">Counter</MenuItemLink>
               <MenuItemLink to="/createActivity">Create Activity</MenuItemLink>
             </Box>
             <MenuItem>User Menu</MenuItem>
