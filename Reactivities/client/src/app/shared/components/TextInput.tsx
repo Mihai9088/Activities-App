@@ -1,9 +1,9 @@
 import { TextField, TextFieldProps } from '@mui/material';
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form';
 
-type TextInputProps<T extends FieldValues> = UseControllerProps<T> & TextFieldProps;
+type Props<T extends FieldValues> = {} & UseControllerProps<T> & TextFieldProps;
 
-const TextInput = <T extends FieldValues>(props: TextInputProps<T>) => {
+const TextInput = <T extends FieldValues>(props: Props<T>) => {
   const { field, fieldState } = useController(props);
 
   return (
