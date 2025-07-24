@@ -1,6 +1,6 @@
 import { Box, Button, Paper, Typography } from '@mui/material';
 import useActivities from '../../../lib/hooks/useActivities';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { activitySchema } from '../../../lib/schemas/activitySchema';
@@ -18,13 +18,40 @@ export default function ActivityForm() {
   });
   const { id } = useParams();
   const { updateActivity, createActivity, activity, isLoadingActivity } = useActivities(id);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (activity) reset(activity);
+    if (activity)
+      reset({
+        ...activity,
+        location: {
+          city: activity.city,
+          venue: activity.venue,
+          latitude: activity.latitude,
+          longitude: activity.longitude,
+        },
+      });
   }, [activity, reset]);
 
   const onSubmit = async (data: activitySchema) => {
-    console.log(data);
+    const { location, ...rest } = data;
+    const flattenedData = { ...rest, ...location } as Activity;
+    try {
+      if (activity) {
+        updateActivity.mutate(
+          { ...activity, ...flattenedData },
+          {
+            onSuccess: () => navigate(`/activities/${activity.id}`),
+          }
+        );
+      } else {
+        createActivity.mutate(flattenedData, {
+          onSuccess: (id) => navigate(`/activities/${id}`),
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (isLoadingActivity) return <Typography>Loading...</Typography>;
@@ -42,8 +69,10 @@ export default function ActivityForm() {
       >
         <TextInput label="Title" control={control} name="title" />
         <TextInput label="Description" control={control} name="description" multiline rows={4} />
-        <SelectInput label="Category" items={categoryOptions} control={control} name="category" />
-        <DateTimeInput label="Date" control={control} name="date" />
+        <Box display="flex" gap={3}>
+          <SelectInput label="Category" items={categoryOptions} control={control} name="category" />
+          <DateTimeInput label="Date" control={control} name="date" />
+        </Box>
         <LocationInput label="Location" control={control} name="location" />
         <Box display="flex" justifyContent="end" gap={3}>
           <Button color="inherit">Cancel</Button>
