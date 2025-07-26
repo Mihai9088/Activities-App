@@ -3,7 +3,7 @@ import agent from '../api/agent';
 import { useLocation } from 'react-router';
 import { useAccount } from './useAccount';
 
-const useActivities = (id?: string) => {
+export const useActivities = (id?: string) => {
   const queryClient = useQueryClient();
   const { currentUser } = useAccount();
   const location = useLocation();
@@ -14,6 +14,7 @@ const useActivities = (id?: string) => {
       const response = await agent.get<Activity[]>('/activities');
       return response.data;
     },
+
     enabled: !id && location.pathname === '/activities' && !!currentUser,
   });
 
@@ -23,15 +24,18 @@ const useActivities = (id?: string) => {
       const response = await agent.get<Activity>(`/activities/${id}`);
       return response.data;
     },
+
     enabled: !!id && !!currentUser,
   });
 
   const updateActivity = useMutation({
     mutationFn: async (activity: Activity) => {
-      return await agent.put('/activities', activity);
+      await agent.put('/activities', activity);
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['activities'] });
+      await queryClient.invalidateQueries({
+        queryKey: ['activities'],
+      });
     },
   });
 
@@ -41,27 +45,31 @@ const useActivities = (id?: string) => {
       return response.data;
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['activities'] });
+      await queryClient.invalidateQueries({
+        queryKey: ['activities'],
+      });
     },
   });
 
   const deleteActivity = useMutation({
     mutationFn: async (id: string) => {
-      return await agent.delete(`/activities/${id}`);
+      await agent.delete(`/activities/${id}`);
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['activities'] });
+      await queryClient.invalidateQueries({
+        queryKey: ['activities'],
+      });
     },
   });
 
   return {
     activities,
     isLoading,
+    isLoadingActivity,
+    activity,
     updateActivity,
     createActivity,
     deleteActivity,
-    activity,
-    isLoadingActivity,
   };
 };
 
