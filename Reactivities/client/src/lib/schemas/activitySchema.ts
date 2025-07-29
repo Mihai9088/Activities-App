@@ -16,4 +16,4 @@ export const activitySchema = z.object({
   }),
 });
 
-export type activitySchema = z.infer<typeof activitySchema>;
+export type ActivitySchema = z.infer<typeof activitySchema>;

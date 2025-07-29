@@ -11,6 +11,13 @@ type Activity = {
   longitude: number;
 };
 
+type User = {
+  id: string;
+  email: string;
+  displayName: string;
+  imageUrl?: string;
+};
+
 type LocationIQSuggestion = {
   place_id: string;
   osm_id: string;
@@ -41,11 +48,4 @@ type LocationIQAddress = {
   country: string;
   country_code: string;
   neighbourhood?: string;
-};
-
-type User = {
-  id: string;
-  displayName: string;
-  email: string;
-  imageUrl?: string;
 };

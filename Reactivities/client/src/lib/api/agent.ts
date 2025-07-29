@@ -45,7 +45,7 @@ agent.interceptors.response.use(
         }
         break;
       case 401:
-        toast.error('Unauthorized');
+        toast.error('Unauthorised');
         break;
       case 404:
         router.navigate('/not-found');
@@ -60,4 +60,5 @@ agent.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 export default agent;

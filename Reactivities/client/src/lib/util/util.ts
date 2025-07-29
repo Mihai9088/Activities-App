@@ -1,4 +1,4 @@
-import { format, type DateArg } from 'date-fns';
+import { DateArg, format } from 'date-fns';
 import { z } from 'zod';
 
 export function formatDate(date: DateArg<Date>) {

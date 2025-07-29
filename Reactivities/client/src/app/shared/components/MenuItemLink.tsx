@@ -2,7 +2,7 @@ import { MenuItem } from '@mui/material';
 import type { ReactNode } from 'react';
 import { NavLink } from 'react-router';
 
-const MenuItemLink = ({ children, to }: { children: ReactNode; to: string }) => {
+export default function MenuItemLink({ children, to }: { children: ReactNode; to: string }) {
   return (
     <MenuItem
       component={NavLink}
@@ -12,12 +12,12 @@ const MenuItemLink = ({ children, to }: { children: ReactNode; to: string }) => 
         textTransform: 'uppercase',
         fontWeight: 'bold',
         color: 'inherit',
-        '&.active': { color: 'yellow' },
+        '&.active': {
+          color: 'yellow',
+        },
       }}
     >
       {children}
     </MenuItem>
   );
-};
-
-export default MenuItemLink;
+}

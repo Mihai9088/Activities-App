@@ -14,7 +14,6 @@ export const useActivities = (id?: string) => {
       const response = await agent.get<Activity[]>('/activities');
       return response.data;
     },
-
     enabled: !id && location.pathname === '/activities' && !!currentUser,
   });
 
@@ -24,7 +23,6 @@ export const useActivities = (id?: string) => {
       const response = await agent.get<Activity>(`/activities/${id}`);
       return response.data;
     },
-
     enabled: !!id && !!currentUser,
   });
 
@@ -65,12 +63,10 @@ export const useActivities = (id?: string) => {
   return {
     activities,
     isLoading,
-    isLoadingActivity,
-    activity,
     updateActivity,
     createActivity,
     deleteActivity,
+    activity,
+    isLoadingActivity,
   };
 };
-
-export default useActivities;
