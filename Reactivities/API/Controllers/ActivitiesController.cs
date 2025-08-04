@@ -34,10 +34,12 @@ public class ActivitiesController() : BaseApiController
         return HandleResult(await Mediator.Send(new CreateActivity.Command { ActivityDto = activityDto }));
     }
 
-    [HttpPut]
-    public async Task<ActionResult> EditActivity(EditActivityDto activityDto)
+    [HttpPut("{id}")]
+    [Authorize(Policy = "IsActivityHost")]
+    public async Task<ActionResult> EditActivity(string id, EditActivityDto activity)
     {
-        return HandleResult(await Mediator.Send(new EditActivity.Command { ActivityDto = activityDto }));
+        activity.Id = id;
+        return HandleResult(await Mediator.Send(new EditActivity.Command { ActivityDto = activity }));
     }
 
 
@@ -50,4 +52,9 @@ public class ActivitiesController() : BaseApiController
 
     }
 
+    [HttpPost("{id}/attend")]
+    public async Task<ActionResult> Attend(string id)
+    {
+        return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = id }));
+    }
 }
